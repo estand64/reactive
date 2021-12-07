@@ -16,7 +16,7 @@ public class BlockingService {
         executorService = Executors.newFixedThreadPool(6);
     }
 
-    public void firstLogicalThought(){
+    public void firstLogicalThought() throws ExecutionException, InterruptedException {
         CallData callA = new CallData("Call to A1", webClient::callFive);
         CallData callA2 = new CallData("Call to A2", webClient::callTwo);
         var prereqCall = processCall(null, callA);
@@ -27,9 +27,84 @@ public class BlockingService {
         CallData callB = new CallData("Call to B1", webClient::callFour);
         CallData callB2 = new CallData("Call to B2", webClient::callOne);
         CallData callB3 = new CallData("Call to B3", webClient::callOne);
-        prereqCall = processCall(null, callA);
-        returnedCall = processCall(prereqCall, callA2);
-        returnedCall = processCall(prereqCall, callA);
+        prereqCall = processCall(null, callB);
+        returnedCall = processCall(prereqCall, callB2);
+        System.out.println("Value returned from " + callB2.name + ": " + returnedCall.get());
+        returnedCall = processCall(prereqCall, callB3);
+        System.out.println("Value returned from " + callB3.name + ": " + returnedCall.get());
+    }
+
+    public void secondPass(){
+        CallData callA = new CallData("Call to A1", webClient::callFive);
+        CallData callB = new CallData("Call to B1", webClient::callFour);
+        CallData callA2 = new CallData("Call to A2", webClient::callTwo);
+        CallData callB2 = new CallData("Call to B2", webClient::callOne);
+        CallData callB3 = new CallData("Call to B3", webClient::callOne);
+
+        var prereqCallA = processCall(null, callA);
+        var prereqCallB = processCall(null, callB);
+
+
+        try {
+            var returnedCallA = processCall(prereqCallA, callA2);
+            System.out.println("Value returned from " + callA2.name + ": " + returnedCallA.get());
+        } catch (InterruptedException | ExecutionException e) {
+            System.out.println("something went wrong with the call to " + callA2.name());
+            e.printStackTrace();
+        }
+
+        Future<ReturnedItem> returnedCallB;
+        try {
+            returnedCallB = processCall(prereqCallB, callB2);
+            System.out.println("Value returned from " + callB2.name + ": " + returnedCallB.get());
+        } catch (InterruptedException | ExecutionException e) {
+            System.out.println("something went wrong with the call to " + callB2.name());
+            e.printStackTrace();
+        }
+
+        try {
+            returnedCallB = processCall(prereqCallB, callB3);
+            System.out.println("Value returned from " + callB3.name + ": " + returnedCallB.get());
+        } catch (InterruptedException | ExecutionException e) {
+            System.out.println("something went wrong with the call to " + callB3.name());
+            e.printStackTrace();
+        }
+    }
+
+    public void correct(){
+        CallData callA = new CallData("Call to A1", webClient::callFive);
+        CallData callB = new CallData("Call to B1", webClient::callFour);
+        CallData callA2 = new CallData("Call to A2", webClient::callTwo);
+        CallData callB2 = new CallData("Call to B2", webClient::callOne);
+        CallData callB3 = new CallData("Call to B3", webClient::callOne);
+
+        var prereqCallA = processCall(null, callA);
+        var prereqCallB = processCall(null, callB);
+
+
+        Future<Future<ReturnedItem>> returnedCallA = executorService.submit(() -> processCall(prereqCallA, callA2));
+        try {
+            System.out.println("Value returned from " + callA2.name + ": " + returnedCallA.get().get());
+        } catch (InterruptedException | ExecutionException e) {
+            System.out.println("something went wrong with the call to " + callA2.name());
+            e.printStackTrace();
+        }
+
+        Future<Future<ReturnedItem>> returnedCallB = executorService.submit(() -> processCall(prereqCallB, callB2));
+        try {
+            System.out.println("Value returned from " + callB2.name + ": " + returnedCallB.get().get());
+        } catch (InterruptedException | ExecutionException e) {
+            System.out.println("something went wrong with the call to " + callB2.name());
+            e.printStackTrace();
+        }
+
+        Future<Future<ReturnedItem>> returnedCallB2 = executorService.submit(() -> processCall(prereqCallB, callB3));
+        try {
+            System.out.println("Value returned from " + callB3.name + ": " + returnedCallB2.get().get());
+        } catch (InterruptedException  | ExecutionException e) {
+            System.out.println("something went wrong with the call to " + callB3.name());
+            e.printStackTrace();
+        }
     }
 
     private Future<ReturnedItem> processCall(Future<ReturnedItem> prereq, CallData call){

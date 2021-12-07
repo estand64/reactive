@@ -1,4 +1,4 @@
-package controllers;
+package com.standley.wait.controllers;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -7,8 +7,8 @@ import java.util.UUID;
 
 @RestController
 public class WaitController {
-    private static final String BAD_TEMPLATE = "Didn't sleep %i second cause something went wrong";
-    private static final String GOOD_TEMPLATE = "slept %i second";
+    private static final String BAD_TEMPLATE = "Didn't sleep %n second cause something went wrong";
+    private static final String GOOD_TEMPLATE = "slept %n second";
 
     @GetMapping("/wait1")
     public Data waitOne(){
@@ -22,7 +22,7 @@ public class WaitController {
 
     @GetMapping("/wait2")
     public Data waitTwo(){
-        int time = 2;
+        long time = 2;
         try {
             Thread.sleep(time*1000);
         } catch (InterruptedException e) {
@@ -33,7 +33,7 @@ public class WaitController {
 
     @GetMapping("/wait3")
     public Data waitThree(){
-        int time = 3;
+        long time = 3;
         try {
             Thread.sleep(time*1000);
         } catch (InterruptedException e) {
@@ -44,7 +44,7 @@ public class WaitController {
 
     @GetMapping("/wait4")
     public Data waitFour(){
-        int time = 4;
+        long time = 4;
         try {
             Thread.sleep(time*1000);
         } catch (InterruptedException e) {
@@ -55,7 +55,7 @@ public class WaitController {
 
     @GetMapping("/wait5")
     public Data waitFive(){
-        int time = 5;
+        long time = 5;
         try {
             Thread.sleep(time*1000);
         } catch (InterruptedException e) {
@@ -66,4 +66,3 @@ public class WaitController {
 
     private record Data(UUID id, String info){}
 }
-
