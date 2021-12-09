@@ -13,6 +13,7 @@ public class WaitController {
     @GetMapping("/wait1")
     public Data waitOne(){
         try {
+            System.out.println("sleeping for 1 second");
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             return new Data(UUID.randomUUID(), String.format(BAD_TEMPLATE, 1));
@@ -24,6 +25,7 @@ public class WaitController {
     public Data waitTwo(){
         long time = 2;
         try {
+            System.out.println("sleeping for 2 seconds");
             Thread.sleep(time*1000);
         } catch (InterruptedException e) {
             return new Data(UUID.randomUUID(), String.format(BAD_TEMPLATE, time));
@@ -35,6 +37,7 @@ public class WaitController {
     public Data waitThree(){
         long time = 3;
         try {
+            System.out.println("sleeping for 3 seconds");
             Thread.sleep(time*1000);
         } catch (InterruptedException e) {
             return new Data(UUID.randomUUID(), String.format(BAD_TEMPLATE, time));
@@ -46,6 +49,7 @@ public class WaitController {
     public Data waitFour(){
         long time = 4;
         try {
+            System.out.println("sleeping for 4 seconds");
             Thread.sleep(time*1000);
         } catch (InterruptedException e) {
             return new Data(UUID.randomUUID(), String.format(BAD_TEMPLATE, time));
@@ -57,6 +61,7 @@ public class WaitController {
     public Data waitFive(){
         long time = 5;
         try {
+            System.out.println("sleeping for 5 seconds");
             Thread.sleep(time*1000);
         } catch (InterruptedException e) {
             return new Data(UUID.randomUUID(), String.format(BAD_TEMPLATE, time));

@@ -1,0 +1,5 @@
+server:
+  port: 12346
+api:
+  wait:
+    host: http://localhost:12345

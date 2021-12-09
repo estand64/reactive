@@ -2,8 +2,10 @@ package com.example.reactive.webclients;
 
 import com.example.reactive.configuration.WaitApiProperties;
 import com.example.reactive.dto.ReturnedItem;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+@Component
 public class BlockingWebClient implements WaitWebClient{
     private final WaitApiProperties properties;
     private final RestTemplate restTemplate;

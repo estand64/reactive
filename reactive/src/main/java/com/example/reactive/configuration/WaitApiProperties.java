@@ -2,8 +2,10 @@ package com.example.reactive.configuration;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
 
 @Data
+@Configuration
 @ConfigurationProperties(prefix = "api.wait")
 public class WaitApiProperties {
     public static final String ONE_ENDPOINT = "wait1";
@@ -14,4 +16,7 @@ public class WaitApiProperties {
 
     private String host;
     private int timeOutSeconds;
+
+    public WaitApiProperties() {
+    }
 }
