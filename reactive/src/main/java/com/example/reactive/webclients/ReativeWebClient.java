@@ -4,38 +4,37 @@ import com.example.reactive.configuration.WaitApiProperties;
 import com.example.reactive.dto.ReturnedItem;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 @Component
-public class ReativeWebClient implements WaitWebClient{
+public class ReativeWebClient{
+    private final WaitApiProperties properties;
     private final WebClient webClient;
 
-    public ReativeWebClient(WebClient webClient) {
-        this.webClient = webClient;
+    public ReativeWebClient(WaitApiProperties properties) {
+        this.properties = properties;
+        this.webClient = WebClient.builder()
+                .baseUrl(properties.getHost())
+                .build();
     }
 
-
-    @Override
-    public ReturnedItem callOne() {
-        return null;
+    public Mono<ReturnedItem> callOne() {
+        return webClient.get().uri(WaitApiProperties.ONE_ENDPOINT).retrieve().bodyToMono(ReturnedItem.class);
     }
 
-    @Override
-    public ReturnedItem callTwo() {
-        return null;
+    public Mono<ReturnedItem> callTwo() {
+        return webClient.get().uri(WaitApiProperties.TWO_ENDPOINT).retrieve().bodyToMono(ReturnedItem.class);
     }
 
-    @Override
-    public ReturnedItem callThree() {
-        return null;
+    public Mono<ReturnedItem> callThree() {
+        return webClient.get().uri(WaitApiProperties.THREE_ENDPOINT).retrieve().bodyToMono(ReturnedItem.class);
     }
 
-    @Override
-    public ReturnedItem callFour() {
-        return null;
+    public Mono<ReturnedItem> callFour() {
+        return webClient.get().uri(WaitApiProperties.FOUR_ENDPOINT).retrieve().bodyToMono(ReturnedItem.class);
     }
 
-    @Override
-    public ReturnedItem callFive() {
-        return null;
+    public Mono<ReturnedItem> callFive() {
+        return webClient.get().uri(WaitApiProperties.FIVE_ENDPOINT).retrieve().bodyToMono(ReturnedItem.class);
     }
 }

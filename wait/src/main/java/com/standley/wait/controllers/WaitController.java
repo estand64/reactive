@@ -8,7 +8,7 @@ import java.util.UUID;
 @RestController
 public class WaitController {
     private static final String BAD_TEMPLATE = "Didn't sleep %n second cause something went wrong";
-    private static final String GOOD_TEMPLATE = "slept %n second";
+    private static final String GOOD_TEMPLATE = "slept %d second";
 
     @GetMapping("/wait1")
     public Data waitOne(){
