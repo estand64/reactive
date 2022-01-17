@@ -1,43 +1,38 @@
 package com.example.reactive.webclients;
 
-import com.example.reactive.configuration.WaitApiProperties;
+import com.example.reactive.configuration.ApiProperties;
 import com.example.reactive.dto.ReturnedItem;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 @Component
-public class BlockingWebClient implements WaitWebClient{
-    private final WaitApiProperties properties;
+public class BlockingWebClient{
+    private final ApiProperties properties;
     private final RestTemplate restTemplate;
 
-    public BlockingWebClient(WaitApiProperties properties) {
+    public BlockingWebClient(ApiProperties properties) {
         this.properties = properties;
         restTemplate = new RestTemplate();
     }
 
-    @Override
     public ReturnedItem callOne() {
-        return makeCall(WaitApiProperties.ONE_ENDPOINT);
+        return makeCall(ApiProperties.ONE_ENDPOINT);
     }
 
-    @Override
     public ReturnedItem callTwo() {
-        return makeCall(WaitApiProperties.TWO_ENDPOINT);
+        return makeCall(ApiProperties.TWO_ENDPOINT);
     }
 
-    @Override
     public ReturnedItem callThree() {
-        return makeCall(WaitApiProperties.THREE_ENDPOINT);
+        return makeCall(ApiProperties.THREE_ENDPOINT);
     }
 
-    @Override
     public ReturnedItem callFour() {
-        return makeCall(WaitApiProperties.FOUR_ENDPOINT);
+        return makeCall(ApiProperties.FOUR_ENDPOINT);
     }
 
-    @Override
     public ReturnedItem callFive() {
-        return makeCall(WaitApiProperties.FIVE_ENDPOINT);
+        return makeCall(ApiProperties.FIVE_ENDPOINT);
     }
 
     private ReturnedItem makeCall(String endpoint){

@@ -6,9 +6,9 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 @Configuration
 public class ReactiveWebClientConfig {
-    private final WaitApiProperties properties;
+    private final ApiProperties properties;
 
-    public ReactiveWebClientConfig(WaitApiProperties properties) {
+    public ReactiveWebClientConfig(ApiProperties properties) {
         this.properties = properties;
     }
 

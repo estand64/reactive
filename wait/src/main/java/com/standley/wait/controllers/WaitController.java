@@ -1,14 +1,21 @@
 package com.standley.wait.controllers;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Random;
 import java.util.UUID;
 
 @RestController
 public class WaitController {
     private static final String BAD_TEMPLATE = "Didn't sleep %n second cause something went wrong";
     private static final String GOOD_TEMPLATE = "slept %d second";
+    private final Random random;
+
+    public WaitController() {
+        random = new Random();
+    }
 
     @GetMapping("/wait1")
     public Data waitOne(){
@@ -69,5 +76,28 @@ public class WaitController {
         return new Data(UUID.randomUUID(), String.format(GOOD_TEMPLATE, time));
     }
 
+    @GetMapping("/400error")
+    public ResponseEntity<ExtendedData> fourHundredError(){
+        return ResponseEntity.badRequest().build();
+    }
+
+    @GetMapping("/500error")
+    public ResponseEntity<ExtendedData> fiveHundredError(){
+        return ResponseEntity.internalServerError().build();
+    }
+
+    @GetMapping("/randomError")
+    public ResponseEntity<Data> randomError(){
+        var flip = random.nextInt(2);
+        if(flip == 1){
+            System.out.println("returning 503");
+            return ResponseEntity.status(503).build();
+        }
+
+        System.out.println("returning 200");
+        return ResponseEntity.status(200).body(new Data(UUID.randomUUID(), "info"));
+    }
+
     private record Data(UUID id, String info){}
+    private record ExtendedData(UUID id, UUID callingId, String info){}
 }

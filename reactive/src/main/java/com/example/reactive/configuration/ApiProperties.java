@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 @Data
 @Configuration
 @ConfigurationProperties(prefix = "api.wait")
-public class WaitApiProperties {
+public class ApiProperties {
     public static final String ONE_ENDPOINT = "wait1";
     public static final String TWO_ENDPOINT = "wait2";
     public static final String THREE_ENDPOINT = "wait3";
@@ -17,6 +17,6 @@ public class WaitApiProperties {
     private String host;
     private int timeOutSeconds;
 
-    public WaitApiProperties() {
+    public ApiProperties() {
     }
 }
