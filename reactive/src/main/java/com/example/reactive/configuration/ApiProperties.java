@@ -14,6 +14,22 @@ public class ApiProperties {
     public static final String FOUR_ENDPOINT = "wait4";
     public static final String FIVE_ENDPOINT = "wait5";
 
+    public String getHost() {
+		return host;
+	}
+
+	public void setHost(String host) {
+		this.host = host;
+	}
+
+	public int getTimeOutSeconds() {
+		return timeOutSeconds;
+	}
+
+	public void setTimeOutSeconds(int timeOutSeconds) {
+		this.timeOutSeconds = timeOutSeconds;
+	}
+
     private String host;
     private int timeOutSeconds;
 
